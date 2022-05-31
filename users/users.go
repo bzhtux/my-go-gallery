@@ -2,8 +2,10 @@ package users
 
 import (
 	"fmt"
+	"log"
 	"time"
 
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -24,6 +26,26 @@ func AutoMigrate(db *gorm.DB, database interface{}) {
 
 	db.AutoMigrate(database)
 
+}
+
+func HashPassword(userpassword string) (string, error) {
+	encrypt_pass, err := bcrypt.GenerateFromPassword([]byte(userpassword), 14)
+	if err != nil {
+		fmt.Println(err)
+		return "", err
+	}
+	return string(encrypt_pass), nil
+}
+
+func ComparePassword(plain, hash string) bool {
+	p_pass := []byte(plain)
+	h_pass := []byte(hash)
+	err := bcrypt.CompareHashAndPassword(h_pass, p_pass)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	return true
 }
 
 func AddDefaultUser(db *gorm.DB) uint {
@@ -53,4 +75,15 @@ func AddNewUser(db *gorm.DB, usr *User) uint {
 
 	fmt.Printf("User %s already exists\n", usr.Name)
 	return usr.ID
+}
+
+func GetUserByID(db *gorm.DB, id int) *User {
+	var user = User{}
+	result := db.Where("ID = ?", id).First(&user)
+
+	if result.RowsAffected == 0 {
+		return nil
+	}
+
+	return &user
 }
