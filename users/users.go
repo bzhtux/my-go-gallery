@@ -22,12 +22,6 @@ type User struct {
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
-func AutoMigrate(db *gorm.DB, database interface{}) {
-
-	db.AutoMigrate(database)
-
-}
-
 func HashPassword(userpassword string) (string, error) {
 	encrypt_pass, err := bcrypt.GenerateFromPassword([]byte(userpassword), 14)
 	if err != nil {
