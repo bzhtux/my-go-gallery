@@ -35,8 +35,9 @@ func GetPasswordFromEmail(db *gorm.DB, email string) string {
 	result := db.Where("Email = ?", email).First(&u)
 	if result.RowsAffected == 0 {
 		return ""
+	} else {
+		return u.Password
 	}
-	return u.Password
 }
 
 func ComparePassword(plain, hash string) bool {
@@ -44,10 +45,10 @@ func ComparePassword(plain, hash string) bool {
 	h_pass := []byte(hash)
 	err := bcrypt.CompareHashAndPassword(h_pass, p_pass)
 	if err != nil {
-		// log.Println("ComparePasswordError: ", err)
 		return false
+	} else {
+		return true
 	}
-	return true
 }
 
 func UserExists(db *gorm.DB, email string) bool {

@@ -1,13 +1,28 @@
 package db
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func OpenDB(dsn string) *gorm.DB {
+var (
+	DBUser       = os.Getenv("DB_USER")
+	DBName       = os.Getenv("DB_NAME")
+	DBHost       = os.Getenv("DB_HOST")
+	DBPort       = os.Getenv("DB_PORT")
+	DBPassword   = os.Getenv("DB_PASSWORD")
+	SMTPUSer     = os.Getenv("SMTP_USER")
+	SMTPPassword = os.Getenv("SMTP_PASSWORD")
+	SMTPHost     = os.Getenv("SMTP_HOST")
+	SMTPPort     = os.Getenv("SMTP_PORT")
+	dsn          = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
+)
+
+func OpenDB() *gorm.DB {
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {

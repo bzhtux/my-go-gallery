@@ -32,44 +32,17 @@ var (
 	record_user  = true
 )
 
-// type Image struct {
-// 	ID        uint `gorm:"primaryKey"`
-// 	Name      string
-// 	UserID    uint
-// 	User      users.User
-// 	CreatedAt time.Time
-// 	UpdatedAt time.Time
-// 	DeletedAt gorm.DeletedAt `gorm:"index"`
-// }
-
-// type User struct {
-// 	ID        uint `gorm:"primaryKey"`
-// 	Name      string
-// 	Password  string
-// 	Email     string `gorm:"unique"`
-// 	NickName  string
-// 	Avatar    string
-// 	Valid     bool
-// 	CreatedAt time.Time
-// 	UpdatedAt time.Time
-// 	DeletedAt gorm.DeletedAt `gorm:"index"`
-// }
-
 func main() {
 	fmt.Println("Starting with version " + version)
 
-	dsn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
-	// if !db.HealthCheck(dsn) {
-	// 	msg := "Could not connect to DB"
-	// }
-	dbConn := db.OpenDB(dsn)
-	// fmt.Println(dbConn)
+	dbConn := db.OpenDB()
 	dbConn.AutoMigrate(&images.Image{})
 	dbConn.AutoMigrate(&users.User{})
 	uid := users.AddDefaultUser(dbConn)
 	fmt.Println(uid)
 
 	router := gin.Default()
+	router.MaxMultipartMemory = 16 << 32 // 16 MiB
 
 	router.GET("/user/:uid", func(c *gin.Context) {
 		uid := c.Params.ByName("uid")
@@ -80,7 +53,7 @@ func main() {
 			uLName := user.LastName
 			uEmail := user.Email
 			uNick := user.NickName
-			c.JSON(http.StatusOK, gin.H{"username": uFName, "lastname": uLName, "email": uEmail, "nickname": uNick})
+			c.JSON(http.StatusOK, gin.H{"firstname": uFName, "lastname": uLName, "email": uEmail, "nickname": uNick})
 		}
 		if user == nil {
 			c.JSON(http.StatusNotFound, gin.H{"message": "No Username with id " + uid})
@@ -110,7 +83,6 @@ func main() {
 		var nu users.User
 		err := c.BindJSON(&nu)
 		if err != nil {
-			// log.Println("BindJSONError: ", err)
 			c.JSON(http.StatusBadRequest, gin.H{"Error": err})
 		}
 		dbPass := users.GetPasswordFromEmail(dbConn, nu.Email)
@@ -123,16 +95,11 @@ func main() {
 		}
 
 	})
+
+	router.POST("/image/upload", images.UploadImage)
+	router.GET("image/:id", images.GetImageByID)
+	router.DELETE("/image/delete/:id", images.DeleteImage)
+
 	router.Run(":" + os.Getenv("APP_PORT"))
-
-	// demo := Image{Name: "demo.jpg", UserID: yann.ID}
-
-	// _ = db.Create(&demo)
-
-	// fmt.Println(demo.ID)
-
-	// db.Find(&img)
-
-	// fmt.Println("All Images: ", img.ID)
 
 }
