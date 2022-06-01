@@ -1,4 +1,4 @@
-module github.com/bzhtux/my-go-gallery
+module github.com/bzhtux/my-go-gallery/backend
 
 go 1.17
 
