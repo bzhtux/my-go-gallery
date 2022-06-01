@@ -1,5 +1,12 @@
 package images
 
+import (
+	"time"
+
+	"gorm.io/gorm"
+	"github.com/bzhtux/my-go-gallery/backend/users"
+)
+
 type Image struct {
 	ID        uint `gorm:"primaryKey"`
 	Name      string

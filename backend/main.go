@@ -6,12 +6,13 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"time"
+
+	// "time"
 
 	"github.com/bzhtux/my-go-gallery/backend/db"
+	"github.com/bzhtux/my-go-gallery/backend/images"
 	"github.com/bzhtux/my-go-gallery/backend/users"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 const (
@@ -19,23 +20,27 @@ const (
 )
 
 var (
-	DBUser      = os.Getenv("DB_USER")
-	DBName      = os.Getenv("DB_NAME")
-	DBHost      = os.Getenv("DB_HOST")
-	DBPort      = os.Getenv("DB_PORT")
-	DBPassword  = os.Getenv("DB_PASSWORD")
-	record_user = true
+	DBUser       = os.Getenv("DB_USER")
+	DBName       = os.Getenv("DB_NAME")
+	DBHost       = os.Getenv("DB_HOST")
+	DBPort       = os.Getenv("DB_PORT")
+	DBPassword   = os.Getenv("DB_PASSWORD")
+	SMTPUSer     = os.Getenv("SMTP_USER")
+	SMTPPassword = os.Getenv("SMTP_PASSWORD")
+	SMTPHost     = os.Getenv("SMTP_HOST")
+	SMTPPort     = os.Getenv("SMTP_PORT")
+	record_user  = true
 )
 
-type Image struct {
-	ID        uint `gorm:"primaryKey"`
-	Name      string
-	UserID    uint
-	User      users.User
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
-}
+// type Image struct {
+// 	ID        uint `gorm:"primaryKey"`
+// 	Name      string
+// 	UserID    uint
+// 	User      users.User
+// 	CreatedAt time.Time
+// 	UpdatedAt time.Time
+// 	DeletedAt gorm.DeletedAt `gorm:"index"`
+// }
 
 // type User struct {
 // 	ID        uint `gorm:"primaryKey"`
@@ -52,24 +57,6 @@ type Image struct {
 
 func main() {
 	fmt.Println("Starting with version " + version)
-	// encrypt_pass, err := users.HashPassword("tuxpasss")
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-	// fmt.Println("Encrypted Password:", encrypt_pass)
-	// if !users.ComparePassword("tuxpasss", encrypt_pass) {
-	// 	// fmt.Println("Password mismatch !")
-	// 	log.Println("Password mismatch, authentication failed")
-	// 	record_user = false
-	// 	os.Exit(1)
-	// }
-	// if record_user {
-	// 	fmt.Println("Password match !")
-	// 	os.Exit(0)
-	// }
-
-	// var img = Image{}
-	// var user = User{}
 
 	dsn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
 	// if !db.HealthCheck(dsn) {
@@ -77,7 +64,7 @@ func main() {
 	// }
 	dbConn := db.OpenDB(dsn)
 	// fmt.Println(dbConn)
-	dbConn.AutoMigrate(&Image{})
+	dbConn.AutoMigrate(&images.Image{})
 	dbConn.AutoMigrate(&users.User{})
 	uid := users.AddDefaultUser(dbConn)
 	fmt.Println(uid)
