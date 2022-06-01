@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bzhtux/my-go-gallery/db"
-	"github.com/bzhtux/my-go-gallery/users"
+	"github.com/bzhtux/my-go-gallery/backend/db"
+	"github.com/bzhtux/my-go-gallery/backend/users"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
