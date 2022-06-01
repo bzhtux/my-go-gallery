@@ -10,6 +10,13 @@ This App is supposed to be a sample app to test a fresh kubernetes installation.
 * an API/Backend service
 * a frontend (JS ninjas are welcome to help, otherwise it will be simple (very simple) HTML code)
 
+## What should be tested ?
+
+* k8s internal services (db and backend /api)
+* k8s external services (frontend and maybe API)
+* k8s ingress with ssl (optional)
+* k8s persistent storage (for db and files/photos)
+
 # Requirements
 
 Here is the list of what you need to contribute:
