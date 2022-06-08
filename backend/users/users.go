@@ -107,10 +107,10 @@ func AddNewUser(c *gin.Context) {
 func GetUserByID(c *gin.Context) {
 	userID := c.Params.ByName("uid")
 	intVal, _ := strconv.Atoi(userID)
-	// db := db.OpenDB()
-	db := db.Conn{}
+	db := db.OpenDB()
+	// db := db.Conn{}
 	var user = User{}
-	result := db.DBConn.Where("ID = ?", intVal).First(&user)
+	result := db.Where("ID = ?", intVal).First(&user)
 	if result.RowsAffected == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"message": "No Username with id " + userID})
 	} else {
