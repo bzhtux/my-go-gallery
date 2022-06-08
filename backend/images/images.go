@@ -79,10 +79,13 @@ func UploadImage(c *gin.Context) {
 		if RecordImage(filename.Filename) {
 			dst := dest + "/" + filename.Filename
 			err := c.SaveUploadedFile(filename, dst)
+			db := db.OpenDB()
+			var i = Image{}
+			db.Where("Name = ?", filename.Filename).First(&i)
 			if err != nil {
 				c.JSON(http.StatusBadRequest, gin.H{"Status": "images " + filename.Filename + " was NOT uploaded"})
 			} else {
-				c.JSON(http.StatusOK, gin.H{"Status": "images " + filename.Filename + " was uploaded"})
+				c.JSON(http.StatusOK, gin.H{"Status": "images " + filename.Filename + " was uploaded", "ID": i.ID})
 			}
 		}
 	} else {
@@ -93,7 +96,7 @@ func UploadImage(c *gin.Context) {
 
 func DeleteImage(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var i Image
+	var i = Image{}
 	db := db.OpenDB()
 	result := db.Where("ID = ?", id).First(&i)
 	img_name := i.Name
