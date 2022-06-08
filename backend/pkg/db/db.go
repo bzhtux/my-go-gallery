@@ -22,14 +22,22 @@ var (
 	dsn          = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
 )
 
+// type Handler struct {
+// 	DB *gorm.DB
+// }
+
+// func New(db *gorm.DB) Handler {
+// 	return Handler{db}
+// }
+
 func OpenDB() *gorm.DB {
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("%s", err)
 	}
 
-	return db
+	return conn
 }
 
 func HealthCheck(dsn string) bool {
@@ -37,9 +45,9 @@ func HealthCheck(dsn string) bool {
 
 	if err != nil {
 		return false
+	} else {
+		return true
 	}
-
-	return true
 }
 
 func AutoMigrate(db *gorm.DB, database interface{}) {
