@@ -44,9 +44,9 @@ func HealthCheck(dsn string) bool {
 
 	if err != nil {
 		return false
+	} else {
+		return true
 	}
-
-	return true
 }
 
 func AutoMigrate(db *gorm.DB, database interface{}) {
