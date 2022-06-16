@@ -22,8 +22,9 @@ func (h Handler) DeleteImage(c *gin.Context) {
 			err := os.Remove(dest + "/" + img_name)
 			if err != nil {
 				log.Println(err)
+			} else {
+				c.JSON(http.StatusOK, gin.H{"Status": "Image ID " + id + " was successfully deleted"})
 			}
-			c.JSON(http.StatusOK, gin.H{"Status": "Image ID " + id + " was successfully deleted"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"Status": "Image ID " + id + " was not deleted"})
 		}

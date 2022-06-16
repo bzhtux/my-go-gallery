@@ -16,6 +16,8 @@ func (h Handler) GetImageByID(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"Status": "Image with ID " + id + " was not found"})
 	} else {
 		// Found record here
-		c.JSON(http.StatusOK, gin.H{"Name": i.Name})
+		var u = models.User{}
+		h.DB.Where("Id = ?", i.UserID).First(&u)
+		c.JSON(http.StatusOK, gin.H{"ID": i.ID, "Name": i.Name, "Uploaded by": u.NickName, "Uploaded": i.CreatedAt})
 	}
 }

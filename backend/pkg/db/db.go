@@ -4,22 +4,20 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var (
-	DBUser       = os.Getenv("DB_USER")
-	DBName       = os.Getenv("DB_NAME")
-	DBHost       = os.Getenv("DB_HOST")
-	DBPort       = os.Getenv("DB_PORT")
-	DBPassword   = os.Getenv("DB_PASSWORD")
-	SMTPUSer     = os.Getenv("SMTP_USER")
-	SMTPPassword = os.Getenv("SMTP_PASSWORD")
-	SMTPHost     = os.Getenv("SMTP_HOST")
-	SMTPPort     = os.Getenv("SMTP_PORT")
-	dsn          = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
+	DBUser     = os.Getenv("DB_USER")
+	DBName     = os.Getenv("DB_NAME")
+	DBHost     = os.Getenv("DB_HOST")
+	DBPort     = os.Getenv("DB_PORT")
+	DBPassword = os.Getenv("DB_PASSWORD")
+	dsn        = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
 )
 
 // type Handler struct {
@@ -32,7 +30,19 @@ var (
 
 func OpenDB() *gorm.DB {
 
-	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	newLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
+		logger.Config{
+			SlowThreshold:             time.Second,   // Slow SQL threshold
+			LogLevel:                  logger.Silent, // Log level
+			IgnoreRecordNotFoundError: true,          // Ignore ErrRecordNotFound error for logger
+			// Colorful:                  false,          // Disable color
+		},
+	)
+
+	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: newLogger,
+	})
 	if err != nil {
 		log.Fatalf("%s", err)
 	}
