@@ -5,7 +5,7 @@ LABEL maintainer="Yannick Foeillet <bzhtux@gmail.com>"
 RUN apk --no-cache add build-base git mercurial gcc
 RUN mkdir -p /go/src/github.com/bzhtux/mgg
 ADD . /go/src/github.com/bzhtux/mgg
-RUN cd /go/src/github.com/bzhtux/cmgg && go get ./... && go build -o mgg-api
+RUN cd /go/src/github.com/bzhtux/mgg && go get ./... && go build -o mgg-api
 
 
 # final image
