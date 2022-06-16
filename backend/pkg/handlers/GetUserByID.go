@@ -18,6 +18,6 @@ func (h Handler) GetUserByID(c *gin.Context) {
 	if result.RowsAffected == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"message": "No Username with id " + userID})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"firstname": user.FirstName, "lastname": user.LastName, "email": user.Email, "nickname": user.NickName})
+		c.JSON(http.StatusOK, gin.H{"firstname": user.FirstName, "lastname": user.LastName, "email": user.Email, "nickname": user.NickName, "Member since": user.CreatedAt})
 	}
 }
