@@ -1,0 +1,10 @@
+**/.env
+**/api
+**/Makefile
+**/pg_data
+**/start-docker-pg.sh
+**/my-go-gallery.code-workspace
+**/.vscode
+**/clean-docker-pg.sh
+**/nohup.out
+**/test.sh
