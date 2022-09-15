@@ -34,7 +34,8 @@ func OpenDB() *gorm.DB {
 
 	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("%s", err)
+		// log.Fatalf("%s", err)
+		log.Printf("%s", err)
 	}
 
 	return conn
