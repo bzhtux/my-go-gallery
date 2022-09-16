@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/bzhtux/my-go-gallery/backend/models"
@@ -11,8 +12,9 @@ func (h Handler) AddNewUser(c *gin.Context) {
 	var user = models.User{}
 	err := c.BindJSON(&user)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"Status": "Can not register nes user:" + err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"Status": "Can not register new user:" + err.Error()})
 	} else {
+		log.Println("AdddNewUser Error :", err.Error())
 		result := h.DB.Where("Email = ?", user.Email).First(&user)
 		if result.RowsAffected == 0 {
 			hpass := HashPassword(user.Password)
