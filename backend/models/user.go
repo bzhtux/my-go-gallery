@@ -11,7 +11,7 @@ type User struct {
 	FirstName string `gorm:"not null" json:"firstname"`
 	LastName  string `gorm:"not null" json:"lastname"`
 	Password  string `gorm:"not null" json:"password"`
-	Email     string `gorm:"unique;index" json:"email"`
+	Email     string `gorm:"not null,unique;index" json:"email"`
 	NickName  string `json:"nickname"`
 	Avatar    string
 	Valid     bool
