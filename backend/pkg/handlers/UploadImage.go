@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/bzhtux/my-go-gallery/backend/models"
@@ -15,6 +16,7 @@ var (
 func (h Handler) UploadImage(c *gin.Context) {
 	// Upload image first and if upload is successful record image in DB
 	filename, _ := c.FormFile("file")
+	log.Println("*** Image filename:", filename)
 	if !h.ImageExistsInDB(filename.Filename) {
 		if h.RecordImage(filename.Filename) {
 			dst := dest + "/" + filename.Filename
