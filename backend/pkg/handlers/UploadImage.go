@@ -16,7 +16,7 @@ var (
 func (h Handler) UploadImage(c *gin.Context) {
 	// Upload image first and if upload is successful record image in DB
 	filename, _ := c.FormFile("file")
-	log.Println("*** Image filename:", filename)
+	log.Println("*** Image filename:", filename.Filename)
 	if !h.ImageExistsInDB(filename.Filename) {
 		if h.RecordImage(filename.Filename) {
 			dst := dest + "/" + filename.Filename
