@@ -7,8 +7,8 @@ import (
 )
 
 type Image struct {
-	ID        uint `gorm:"primaryKey"`
-	Name      string
+	ID        uint   `gorm:"primaryKey"`
+	Name      string `gorm:"not null" json:"name" binding:"required"`
 	UserID    uint
 	User      User
 	CreatedAt time.Time

@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	dest = "/Users/yfoeillet/go/src/github.com/bzhtux/my-go-gallery/backend/uploaded_files"
+	// dest = "/Users/yfoeillet/go/src/github.com/bzhtux/my-go-gallery/backend/uploaded_files"
+	dest = "/uploaded_files"
 )
 
 func (h Handler) UploadImage(c *gin.Context) {
