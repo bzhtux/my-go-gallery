@@ -16,6 +16,6 @@ func (h Handler) GetImageByID(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"Status": "Image with ID " + id + " was not found"})
 	} else {
 		// Found record here
-		c.JSON(http.StatusOK, gin.H{"Name": i.Name})
+		c.JSON(http.StatusOK, gin.H{"Name": i.Name, "Uploaded at": i.CreatedAt})
 	}
 }
