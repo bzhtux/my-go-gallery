@@ -30,7 +30,7 @@ func (h Handler) UploadImage(c *gin.Context) {
 			}
 		}
 	} else {
-		r := h.GetImageByName(filename.Filename)
+		h.GetImageByName(c)
 		// var i = models.Image{}
 		// h.DB.Where("Name = ?", filename.Filename).First(&i)
 		// c.JSON(http.StatusConflict, gin.H{"Status": "Image " + filename.Filename + " already exists", "ID": i.ID})
