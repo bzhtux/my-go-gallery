@@ -1,6 +1,6 @@
 package handlers
 
-import "github.com/bzhtux/my-go-gallery/backend/models"
+import "github.com/bzhtux/my-go-gallery/bsa/models"
 
 func (h Handler) UserExists(email string) bool {
 	var u = models.User{}

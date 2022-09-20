@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/bzhtux/my-go-gallery/backend/models"
+	"github.com/bzhtux/my-go-gallery/bsa/models"
 	"github.com/gin-gonic/gin"
 )
 

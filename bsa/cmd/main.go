@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bzhtux/my-go-gallery/backend/models"
-	"github.com/bzhtux/my-go-gallery/backend/pkg/db"
-	"github.com/bzhtux/my-go-gallery/backend/pkg/handlers"
+	"github.com/bzhtux/my-go-gallery/bsa/models"
+	"github.com/bzhtux/my-go-gallery/bsa/pkg/db"
+	"github.com/bzhtux/my-go-gallery/bsa/pkg/handlers"
 
 	"github.com/gin-gonic/gin"
 )

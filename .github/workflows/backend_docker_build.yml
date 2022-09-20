@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: backend_docker_build
+name: bsa_docker_build
 
 # Controls when the workflow will run
 on:
@@ -58,19 +58,19 @@ jobs:
       - name: build for test
         uses: docker/build-push-action@v3
         with:
-          context: backend
+          context: bsa
           load: true
           tags: ${{ env.TEST_TAG }}
 
       - name: test
         run: |
-          cd backend
+          cd bsa
           dgoss run -e "APP_PORT=8080" ${{ env.TEST_TAG }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: backend
+          context: bsa
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/bzhtux/my-go-gallery/backend/models"
+	"github.com/bzhtux/my-go-gallery/bsa/models"
 )
 
 func (h Handler) GetPasswordFromEmail(email string) string {

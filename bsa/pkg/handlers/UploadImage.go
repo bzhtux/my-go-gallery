@@ -3,12 +3,12 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/bzhtux/my-go-gallery/backend/models"
+	"github.com/bzhtux/my-go-gallery/bsa/models"
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	// dest = "/Users/yfoeillet/go/src/github.com/bzhtux/my-go-gallery/backend/uploaded_files"
+	// dest = "/Users/yfoeillet/go/src/github.com/bzhtux/my-go-gallery/bsa/uploaded_files"
 	dest = "/uploaded_files"
 )
 

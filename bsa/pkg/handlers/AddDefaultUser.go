@@ -3,7 +3,7 @@ package handlers
 import (
 	"fmt"
 
-	"github.com/bzhtux/my-go-gallery/backend/models"
+	"github.com/bzhtux/my-go-gallery/bsa/models"
 )
 
 func (h Handler) AddDefaultUser() uint {

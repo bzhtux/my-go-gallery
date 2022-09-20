@@ -1,6 +1,6 @@
 package handlers
 
-import "github.com/bzhtux/my-go-gallery/backend/models"
+import "github.com/bzhtux/my-go-gallery/bsa/models"
 
 func (h Handler) RecordImage(img string) bool {
 	// Anonymous context so all images belong to anonumous user that should have id 0
