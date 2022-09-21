@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -42,6 +43,14 @@ func GetFileContent(f string) string {
 }
 
 func OpenDB() *gorm.DB {
+
+	for {
+		time.Sleep(1)
+		_, err := os.Stat(B_DIR + "/psql/username")
+		if err != nil {
+			break
+		}
+	}
 
 	if DBUser == "" {
 		os.Setenv(DBUser, GetFileContent(B_DIR+"/psql/username"))
