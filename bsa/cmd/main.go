@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/bzhtux/my-go-gallery/bsa/models"
@@ -12,7 +13,7 @@ import (
 )
 
 const (
-	version = "v0.0.9"
+	version = "v0.0.10"
 )
 
 var (
@@ -43,6 +44,11 @@ func main() {
 	router := gin.Default()
 	router.MaxMultipartMemory = 16 << 32 // 16 MiB
 
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Alive",
+		})
+	})
 	router.GET("/user/:uid", h.GetUserByID)
 	router.POST("/user", h.AddNewUser)
 	router.POST("/user/auth", h.AuthUser)
