@@ -49,6 +49,8 @@ func OpenDB() *gorm.DB {
 		_, err := os.Stat(B_DIR + "/psql/username")
 		if err != nil {
 			break
+		} else {
+			fmt.Println(D_DIR + " does not exists ... waiting ...")
 		}
 	}
 
