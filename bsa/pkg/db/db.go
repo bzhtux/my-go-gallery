@@ -47,12 +47,11 @@ func OpenDB() *gorm.DB {
 
 	for {
 		time.Sleep(1000)
-		_, err := os.Stat(B_DIR + "/psql")
+		_, err := os.Stat(B_DIR + "/psql/username")
 		if err != nil {
 			break
 		} else {
-			// fmt.Println(B_DIR + "/psql does not exists ... waiting ...")
-			log.Printf(err)
+			fmt.Println(B_DIR + "/psql does not exists ... waiting ...")
 		}
 	}
 
