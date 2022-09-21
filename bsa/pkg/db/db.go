@@ -43,11 +43,31 @@ func GetFileContent(f string) string {
 
 func OpenDB() *gorm.DB {
 
-	os.Setenv(DBUser, GetFileContent(B_DIR+"psql/username"))
-	os.Setenv(DBName, GetFileContent(B_DIR+"psql/database"))
-	os.Setenv(DBHost, GetFileContent(B_DIR+"psql/host"))
-	os.Setenv(DBPort, GetFileContent(B_DIR+"psql/port"))
-	os.Setenv(DBPassword, GetFileContent(B_DIR+"psql/password"))
+	if DBUser == "" {
+		os.Setenv(DBUser, GetFileContent(B_DIR+"psql/username"))
+	} else {
+		fmt.Println("OpenDB.DBUser: " + DBUser)
+	}
+	if DBName == "" {
+		os.Setenv(DBName, GetFileContent(B_DIR+"psql/database"))
+	} else {
+		fmt.Println("OpenDB.DBName: " + DBName)
+	}
+	if DBHost == "" {
+		os.Setenv(DBHost, GetFileContent(B_DIR+"psql/host"))
+	} else {
+		fmt.Println("OpenDB.DBHost: " + DBHost)
+	}
+	if DBPort == "" {
+		os.Setenv(DBPort, GetFileContent(B_DIR+"psql/port"))
+	} else {
+		fmt.Println("OpenDB.DBPort: " + DBPort)
+	}
+	if DBPassword == "" {
+		os.Setenv(DBPassword, GetFileContent(B_DIR+"psql/password"))
+	} else {
+		fmt.Println("OpenDB.DBPassword: " + DBPassword)
+	}
 
 	dsn = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
 
