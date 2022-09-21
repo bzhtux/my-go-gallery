@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -20,6 +21,7 @@ var (
 	SMTPHost     = os.Getenv("SMTP_HOST")
 	SMTPPort     = os.Getenv("SMTP_PORT")
 	dsn          = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
+	B_DIR        = "/bindings"
 )
 
 // type Handler struct {
@@ -30,7 +32,24 @@ var (
 // 	return Handler{db}
 // }
 
+func GetFileContent(f string) string {
+	c, err := ioutil.ReadFile(f)
+	if err != nil {
+		fmt.Println(err)
+		return err.Error()
+	}
+	return string(c)
+}
+
 func OpenDB() *gorm.DB {
+
+	os.Setenv(DBUser, GetFileContent(B_DIR+"psql/username"))
+	os.Setenv(DBName, GetFileContent(B_DIR+"psql/database"))
+	os.Setenv(DBHost, GetFileContent(B_DIR+"psql/host"))
+	os.Setenv(DBPort, GetFileContent(B_DIR+"psql/port"))
+	os.Setenv(DBPassword, GetFileContent(B_DIR+"psql/password"))
+
+	dsn = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
 
 	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
