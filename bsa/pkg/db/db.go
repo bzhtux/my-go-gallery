@@ -50,7 +50,7 @@ func OpenDB() *gorm.DB {
 		if err != nil {
 			break
 		} else {
-			fmt.Println(B_DIR+"/psql does not exists ... waiting ...", err)
+			fmt.Println(B_DIR+"/psql does not exists ... waiting ...", err.Error())
 		}
 	}
 
