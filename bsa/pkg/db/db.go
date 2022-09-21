@@ -50,7 +50,7 @@ func OpenDB() *gorm.DB {
 		if err != nil {
 			break
 		} else {
-			fmt.Println(D_DIR + " does not exists ... waiting ...")
+			fmt.Println(B_DIR + " does not exists ... waiting ...")
 		}
 	}
 
