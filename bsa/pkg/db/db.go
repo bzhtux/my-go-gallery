@@ -35,6 +35,7 @@ var (
 
 func GetFileContent(f string) string {
 	c, err := ioutil.ReadFile(f)
+	// c, err := io.READ
 	if err != nil {
 		fmt.Println(err)
 		return err.Error()
@@ -45,12 +46,13 @@ func GetFileContent(f string) string {
 func OpenDB() *gorm.DB {
 
 	for {
-		time.Sleep(1)
+		time.Sleep(1000)
 		_, err := os.Stat(B_DIR + "/psql")
 		if err != nil {
 			break
 		} else {
-			fmt.Println(B_DIR+"/psql does not exists ... waiting ...", err.Error())
+			// fmt.Println(B_DIR + "/psql does not exists ... waiting ...")
+			log.Printf(err.Error())
 		}
 	}
 
