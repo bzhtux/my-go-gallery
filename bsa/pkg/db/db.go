@@ -34,26 +34,15 @@ var (
 
 func GetFileContent(f string) string {
 	c, err := ioutil.ReadFile(f)
-	// c, err := io.READ
 	if err != nil {
 		fmt.Println(err)
-		return err.Error()
+		return "null"
 	}
 	fmt.Printf("*** Content of %v : %v", f, c)
 	return string(c)
 }
 
 func OpenDB() *gorm.DB {
-
-	// for {
-	// 	time.Sleep(1000)
-	// 	_, err := os.Stat(B_DIR + "/psql/username")
-	// 	if err != nil {
-	// 		break
-	// 	} else {
-	// 		fmt.Println(B_DIR + "/psql does not exists ... waiting ...")
-	// 	}
-	// }
 
 	if DBUser == "" {
 		os.Setenv(DBUser, GetFileContent(B_DIR+"/psql/username"))
@@ -69,7 +58,7 @@ func OpenDB() *gorm.DB {
 	}
 	if DBHost == "" {
 		os.Setenv(DBHost, GetFileContent(B_DIR+"/psql/host"))
-		DBName = GetFileContent(B_DIR + "/psql/database")
+		DBHost = GetFileContent(B_DIR + "/psql/database")
 	} else {
 		fmt.Println("OpenDB.DBHost: " + DBHost)
 	}
