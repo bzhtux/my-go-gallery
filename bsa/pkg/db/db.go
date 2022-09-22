@@ -39,6 +39,7 @@ func GetFileContent(f string) string {
 		fmt.Println(err)
 		return err.Error()
 	}
+	fmt.Printf("*** Content of %v : %v", f, c)
 	return string(c)
 }
 
@@ -56,26 +57,31 @@ func OpenDB() *gorm.DB {
 
 	if DBUser == "" {
 		os.Setenv(DBUser, GetFileContent(B_DIR+"/psql/username"))
+		DBUser = GetFileContent(B_DIR + "/psql/username")
 	} else {
 		fmt.Println("OpenDB.DBUser: " + DBUser)
 	}
 	if DBName == "" {
 		os.Setenv(DBName, GetFileContent(B_DIR+"/psql/database"))
+		DBName = GetFileContent(B_DIR + "/psql/database")
 	} else {
 		fmt.Println("OpenDB.DBName: " + DBName)
 	}
 	if DBHost == "" {
 		os.Setenv(DBHost, GetFileContent(B_DIR+"/psql/host"))
+		DBName = GetFileContent(B_DIR + "/psql/database")
 	} else {
 		fmt.Println("OpenDB.DBHost: " + DBHost)
 	}
 	if DBPort == "" {
 		os.Setenv(DBPort, GetFileContent(B_DIR+"/psql/port"))
+		DBPort = GetFileContent(B_DIR + "/psql/port")
 	} else {
 		fmt.Println("OpenDB.DBPort: " + DBPort)
 	}
 	if DBPassword == "" {
 		os.Setenv(DBPassword, GetFileContent(B_DIR+"/psql/password"))
+		DBPassword = GetFileContent(B_DIR + "/psql/password")
 	} else {
 		fmt.Println("OpenDB.DBPassword: " + DBPassword)
 	}
@@ -85,6 +91,7 @@ func OpenDB() *gorm.DB {
 	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		// log.Fatalf("%s", err)
+		fmt.Println("*** Error connectinng to DB ...")
 		log.Printf("%s", err)
 	}
 
