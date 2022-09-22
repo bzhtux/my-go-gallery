@@ -12,7 +12,7 @@ RUN cd /go/src/github.com/bzhtux/mgg && go get ./... && go build -o mgg-api cmd/
 FROM alpine
 LABEL maintainer="Yannick Foeillet <bzhtux@gmail.com>"
 
-RUN apk --no-cache add curl
+RUN apk --no-cache add curl jq
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/bzhtux/mgg/mgg-api /app/
 ENTRYPOINT ./mgg-api
