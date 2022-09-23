@@ -62,7 +62,7 @@ jobs:
           load: true
           tags: ${{ env.TEST_TAG }}
 
-      - name: test
+      - name: dgoss test
         run: |
           cd bsa
           dgoss run -e "APP_PORT=8080" -e "DB_USER=pgtestuser" -e "DB_Host=0.0.0.0" -e "DB_PORT=5432" -e "DB_NAME=testgallery" -e "DB_PASSWORD=testpasswd" ${{ env.TEST_TAG }}
