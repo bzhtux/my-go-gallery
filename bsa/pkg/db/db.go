@@ -20,8 +20,12 @@ var (
 	SMTPPassword = os.Getenv("SMTP_PASSWORD")
 	SMTPHost     = os.Getenv("SMTP_HOST")
 	SMTPPort     = os.Getenv("SMTP_PORT")
-	dsn          = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
-	B_DIR        = "/bindings"
+	// wokeignore:rule=disable
+	dsn    = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
+	B_DIR  = "/bindings"
+	B_NAME = "psql"
+	// B_NAME       = os.Getenv("BIND_NAME")
+	// B_DIR       = os.Getenv("BIND_DIR")
 )
 
 // type Handler struct {
@@ -45,36 +49,32 @@ func GetFileContent(f string) string {
 func OpenDB() *gorm.DB {
 
 	if DBUser == "" {
-		os.Setenv(DBUser, GetFileContent(B_DIR+"/psql/username"))
-		DBUser = GetFileContent(B_DIR + "/psql/username")
+		DBUser = GetFileContent(B_DIR + B_NAME + "/username")
 	} else {
 		fmt.Println("OpenDB.DBUser: " + DBUser)
 	}
 	if DBName == "" {
-		os.Setenv(DBName, GetFileContent(B_DIR+"/psql/database"))
-		DBName = GetFileContent(B_DIR + "/psql/database")
+		DBName = GetFileContent(B_DIR + B_NAME + "/database")
 	} else {
 		fmt.Println("OpenDB.DBName: " + DBName)
 	}
 	if DBHost == "" {
-		os.Setenv(DBHost, GetFileContent(B_DIR+"/psql/host"))
-		DBHost = GetFileContent(B_DIR + "/psql/database")
+		DBHost = GetFileContent(B_DIR + B_NAME + "/database")
 	} else {
 		fmt.Println("OpenDB.DBHost: " + DBHost)
 	}
 	if DBPort == "" {
-		os.Setenv(DBPort, GetFileContent(B_DIR+"/psql/port"))
-		DBPort = GetFileContent(B_DIR + "/psql/port")
+		DBPort = GetFileContent(B_DIR + B_NAME + "/port")
 	} else {
 		fmt.Println("OpenDB.DBPort: " + DBPort)
 	}
 	if DBPassword == "" {
-		os.Setenv(DBPassword, GetFileContent(B_DIR+"/psql/password"))
-		DBPassword = GetFileContent(B_DIR + "/psql/password")
+		DBPassword = GetFileContent(B_DIR + B_NAME + "/password")
 	} else {
 		fmt.Println("OpenDB.DBPassword: " + DBPassword)
 	}
 
+	// wokeignore:rule=disable
 	dsn = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DBHost, DBPort, DBUser, DBName, DBPassword)
 
 	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
