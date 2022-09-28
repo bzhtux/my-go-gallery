@@ -16,8 +16,23 @@ func (h Handler) GetUserByID(c *gin.Context) {
 	var user = models.User{}
 	result := h.DB.Where("ID = ?", intVal).First(&user)
 	if result.RowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"message": "No Username with id " + userID})
+		c.JSON(http.StatusNotFound, gin.H{
+			"status":  "Not found",
+			"message": "No User found with this ID ",
+			"data": gin.H{
+				"ID": userID,
+			},
+		})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"firstname": user.FirstName, "lastname": user.LastName, "email": user.Email, "nickname": user.NickName})
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "OK",
+			"message": "User with ID " + userID + " was found",
+			"data": gin.H{
+				"Firstname": user.FirstName,
+				"Lastname":  user.LastName,
+				"Email":     user.Email,
+				"Nickname":  user.NickName,
+			},
+		})
 	}
 }

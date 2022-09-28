@@ -14,12 +14,18 @@ func (h Handler) DeleteUser(c *gin.Context) {
 	result := h.DB.Where("ID = ?", userID).First(&user)
 	user_email := user.Email
 	if result.RowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"Status": "User " + user_email + " does not exist!"})
+		c.JSON(http.StatusNotFound, gin.H{
+			"status":  "Not Found",
+			"message": "User " + user_email + " does not exist!",
+		})
 	} else {
 		now := time.Now()
 		new_email := user.Email + "." + now.String()
 		h.DB.Model(&models.User{}).Where("ID = ? ", userID).Update("Email", new_email)
 		h.DB.Delete(&user, userID)
-		c.JSON(http.StatusOK, gin.H{"Status": "User with ID " + userID + " was successfully deleted!"})
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "Deleted",
+			"message": "User with ID " + userID + " was successfully deleted",
+		})
 	}
 }

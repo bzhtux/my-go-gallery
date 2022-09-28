@@ -15,7 +15,10 @@ func (h Handler) DeleteImage(c *gin.Context) {
 	result := h.DB.Where("ID = ?", id).First(&i)
 	img_name := i.Name
 	if result.RowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"Status": "Image with ID " + id + " does not exist in DB"})
+		c.JSON(http.StatusNotFound, gin.H{
+			"status":  "Not found",
+			"message": "Image with ID " + id + " was not found, ensure ID is correct",
+		})
 	} else {
 		result := h.DB.Delete(&i, id)
 		if result.RowsAffected != 0 {
@@ -23,9 +26,15 @@ func (h Handler) DeleteImage(c *gin.Context) {
 			if err != nil {
 				log.Println(err)
 			}
-			c.JSON(http.StatusOK, gin.H{"Status": "Image ID " + id + " was successfully deleted"})
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "deleted",
+				"message": "Image with ID " + id + " was successfully deleted",
+			})
 		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{"Status": "Image ID " + id + " was not deleted"})
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  "Internal Error",
+				"message": "Image with ID " + id + " was not deleted",
+			})
 		}
 	}
 

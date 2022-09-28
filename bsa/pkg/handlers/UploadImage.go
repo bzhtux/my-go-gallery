@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/bzhtux/my-go-gallery/bsa/models"
 	"github.com/gin-gonic/gin"
@@ -9,7 +10,8 @@ import (
 
 var (
 	// dest = "/Users/yfoeillet/go/src/github.com/bzhtux/my-go-gallery/bsa/uploaded_files"
-	dest = "/uploaded_files"
+	// dest = "/uploaded_files"
+	dest = os.Getenv("UPLOAD_DIR")
 )
 
 func (h Handler) UploadImage(c *gin.Context) {
@@ -22,9 +24,22 @@ func (h Handler) UploadImage(c *gin.Context) {
 			var i = models.Image{}
 			h.DB.Where("Name = ?", filename.Filename).First(&i)
 			if err != nil {
-				c.JSON(http.StatusBadRequest, gin.H{"Status": "images " + filename.Filename + " was NOT uploaded", "ID": 0})
+				c.JSON(http.StatusBadRequest, gin.H{
+					"status":  "Failed",
+					"message": "images " + filename.Filename + " was NOT uploaded",
+					"data": gin.H{
+						"ID":    0,
+						"Error": err,
+					},
+				})
 			} else {
-				c.JSON(http.StatusOK, gin.H{"Status": "images " + filename.Filename + " was uploaded", "ID": i.ID})
+				c.JSON(http.StatusOK, gin.H{
+					"status":  "Uploaded",
+					"message": "images " + filename.Filename + " was successfuly uploaded",
+					"data": gin.H{
+						"ID": i.ID,
+					},
+				})
 			}
 		}
 	} else {
