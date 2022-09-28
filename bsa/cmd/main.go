@@ -46,7 +46,8 @@ func main() {
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Alive",
+			"status":  "Up",
+			"message": "I am alive",
 		})
 	})
 	router.GET("/user/:uid", h.GetUserByID)
