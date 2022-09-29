@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	version = "v0.0.13"
+	version = "v0.0.14"
 )
 
 var (
@@ -26,12 +26,15 @@ var (
 	SMTPPassword = os.Getenv("SMTP_PASSWORD")
 	SMTPHost     = os.Getenv("SMTP_HOST")
 	SMTPPort     = os.Getenv("SMTP_PORT")
+	UploadDir    = os.Getenv("UPLOAD_DIR")
 )
 
 func main() {
 	fmt.Println("\033[32m***********************************")
 	fmt.Println("*** Starting with version " + version + " ***")
 	fmt.Println("***********************************")
+
+	fmt.Println("UPLOAD_DIR: " + UploadDir)
 
 	dbConn := db.OpenDB()
 	h := handlers.New(dbConn)
@@ -47,7 +50,7 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"status":  "Up",
-			"message": "I am alive",
+			"message": "Alive",
 		})
 	})
 	router.GET("/user/:uid", h.GetUserByID)
