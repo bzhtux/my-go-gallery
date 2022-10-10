@@ -3,7 +3,7 @@ module github.com/bzhtux/my-go-gallery/bsa
 go 1.17
 
 require (
-	gorm.io/driver/postgres v1.3.10
+	gorm.io/driver/postgres v1.4.4
 	gorm.io/gorm v1.23.10
 )
 
