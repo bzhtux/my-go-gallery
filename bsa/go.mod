@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	gorm.io/driver/postgres v1.3.10
-	gorm.io/gorm v1.23.10
+	gorm.io/gorm v1.24.6
 )
 
 require (
@@ -37,7 +37,7 @@ require (
 	github.com/jackc/pgtype v1.12.0 // indirect
 	github.com/jackc/pgx/v4 v4.17.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.4 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // direct
 	golang.org/x/text v0.3.7 // indirect
 )
